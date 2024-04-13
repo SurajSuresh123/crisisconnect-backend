@@ -1,0 +1,7 @@
+# PostgreSQL
+# ------------------------------------------------------------------------------
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=crisisconnect
+POSTGRES_USER=ZKqtguWHMSAQGcYvRIUMFrGGyDjBuBHm
+POSTGRES_PASSWORD=bWfBxZrZ5YqvFU7qiFJJXlimwvEjIkgetbcinJ0qTRrWzZfz4Dh1z1JU4Rww8fdi
