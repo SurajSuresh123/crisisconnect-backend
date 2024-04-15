@@ -12,6 +12,5 @@ class Grievance(models.Model):
     request_id = models.ForeignKey(UserRequest, on_delete=models.CASCADE)
     grievance_desc = models.CharField(max_length=1000)
     created_at = models.DateTimeField(auto_now_add=True)
-
     def __str__(self):
-        return self.user.username + " Grievance no -" + str(self.id)
+        return f"{self.user.username} Grievance no -{str(self.id)}"

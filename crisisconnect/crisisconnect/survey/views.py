@@ -6,12 +6,13 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from .models import Survey
 from rest_framework import status
+from .permission import IsWardMember
 # Create your views here.
 
 class CreateSurvey(CreateAPIView):
     serializer_class = CreateSurveySerializer
     permission_classes = [
-        IsAuthenticated,
+        IsAuthenticated,IsWardMember,
     ]
     def create(self, request: Request) -> Response:
         serializer = self.serializer_class(data=request.data)
@@ -24,7 +25,7 @@ create_survey=CreateSurvey.as_view()
 
 class RetrieveUserSurvey(ListAPIView):
     serializer_class=CreateSurveySerializer
-    permission_classes =[IsAuthenticated,]
+    permission_classes =[IsAuthenticated,IsWardMember,]
     
     def get_queryset(self):
         return Survey.objects.filter(user=self.request.user)
@@ -40,7 +41,7 @@ retrieve_user_survey = RetrieveUserSurvey.as_view()
 
 class SpecificSurveyDetails(RetrieveAPIView):
     serializer_class=RetrieveSurveySerializer
-    permission_classes=[IsAuthenticated,]
+    permission_classes=[IsAuthenticated,IsWardMember,]
     queryset=Survey.objects.all()
     lookup_field='pk'
 

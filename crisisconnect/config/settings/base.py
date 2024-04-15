@@ -85,11 +85,14 @@ THIRD_PARTY_APPS = [
     "allauth",
     "allauth.account",
     "allauth.mfa",
-    "allauth.socialaccount",
     "rest_framework",
     "rest_framework.authtoken",
     "corsheaders",
     "drf_spectacular",
+    "dj_rest_auth",
+    "dj_rest_auth.registration",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
 ]
 
 LOCAL_APPS = [
@@ -97,7 +100,8 @@ LOCAL_APPS = [
     # Your stuff: custom apps go here
     "crisisconnect.user_requests",
     "crisisconnect.survey",
-    "crisisconnect.grievance"
+    "crisisconnect.grievance",
+    "crisisconnect.feedback",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

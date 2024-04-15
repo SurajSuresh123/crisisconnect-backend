@@ -6,6 +6,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from .models import Grievance
 from rest_framework import status
+from .permission import IsWardMember
 # Create your views here.
 
 class CreateGrievance(CreateAPIView):
@@ -23,7 +24,7 @@ create_grievance=CreateGrievance.as_view()
 
 class RetrieveGrievance(ListAPIView):
     serializer_class=RetrieveGrievanceSerializer
-    permission_classes =[IsAuthenticated,]
+    permission_classes =[IsAuthenticated,IsWardMember]
     queryset=Grievance.objects.all()
 
     def list(self,request):
@@ -39,7 +40,7 @@ retrieve_grievance = RetrieveGrievance.as_view()
 class UserRetrieveGrievance(ListAPIView):
     serializer_class = RetrieveGrievanceSerializer
     permission_classes = [
-        IsAuthenticated,
+        IsAuthenticated
     ]
     def get_queryset(self):
         return Grievance.objects.filter(user=self.request.user)

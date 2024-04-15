@@ -41,7 +41,7 @@ class User(AbstractUser):
         default=UserType.VICTIMS,
     )
     govt_id = CharField(max_length=100, blank=True, null=True,unique=True)
-
+    is_completed=BooleanField(default=False)
     def get_absolute_url(self) -> str:
         """Get URL for user's detail view.
 

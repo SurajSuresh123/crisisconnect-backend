@@ -24,6 +24,8 @@ urlpatterns = [
     path("users/", include("crisisconnect.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
+    path('dj-rest-auth/', include('dj_rest_auth.urls')),
+    path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
     # ...
     # Media files
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
@@ -39,6 +41,7 @@ urlpatterns += [
     path("requests/",include("crisisconnect.user_requests.urls")),
     path("survey/",include("crisisconnect.survey.urls")),
     path("grievance/",include("crisisconnect.grievance.urls")),
+    path("feedback/",include("crisisconnect.feedback.urls")),
     # DRF auth token
     path("auth-token/", obtain_auth_token),
     path("api/schema/", SpectacularAPIView.as_view(), name="api-schema"),

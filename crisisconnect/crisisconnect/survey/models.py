@@ -13,4 +13,4 @@ class Survey(models.Model):
   created_by=models.CharField(max_length=100,blank=True,null=True)
 
   def __str__(self):
-    return self.user.username + " " + self.created_by
+    return f"{self.user.username} {self.created_by}"
