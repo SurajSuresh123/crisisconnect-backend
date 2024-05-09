@@ -11,9 +11,9 @@ from rest_framework import status
 
 class CreateRequest(CreateAPIView):
     serializer_class = CreateRequestSerailizer
-    permission_classes = [
-        IsAuthenticated,
-    ]
+    # permission_classes = [
+    #     IsAuthenticated,
+    # ]
 
     def create(self, request: Request) -> Response:
         serializer = self.serializer_class(data=request.data)
@@ -27,9 +27,7 @@ create_request = CreateRequest.as_view()
 
 class RetrieveRequest(ListAPIView):
     serializer_class = RetrieveRequestSerializer
-    permission_classes = [
-        IsAuthenticated,
-    ]
+
     queryset=UserRequest.objects.all()
     def list(self,request):
         user_request=self.get_queryset()
@@ -44,9 +42,6 @@ retrieve_request = RetrieveRequest.as_view()
 
 class UserRetrieveRequest(ListAPIView):
     serializer_class = RetrieveRequestSerializer
-    permission_classes = [
-        IsAuthenticated,
-    ]
     def get_queryset(self):
         return UserRequest.objects.filter(user=self.request.user)
     def user_list(self,request):
@@ -62,7 +57,6 @@ user_retrieve_request = UserRetrieveRequest.as_view()
 
 class SpecificRequestDetails(RetrieveAPIView):
     serializer_class=RetrieveRequestSerializer
-    permission_classes=[IsAuthenticated,]
     queryset=UserRequest.objects.all()
     lookup_field='pk'
 

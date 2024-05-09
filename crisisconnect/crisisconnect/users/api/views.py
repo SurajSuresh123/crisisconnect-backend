@@ -5,7 +5,7 @@ from rest_framework.mixins import RetrieveModelMixin
 from rest_framework.mixins import UpdateModelMixin
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
-
+from allauth.socialaccount.models import SocialAccount
 from crisisconnect.users.models import User
 
 from .serializers import UserSerializer
@@ -22,5 +22,16 @@ class UserViewSet(RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericV
 
     @action(detail=False)
     def me(self, request):
+        user = request.user
+        if user.is_authenticated:
+            try:
+                data = SocialAccount.objects.get(provider='google',user=user).extra_data
+                if not user.name:
+                    user.name = user.username
+                user.save()
+            except SocialAccount.DoesNotExist:
+                pass
+            except KeyError:
+                pass
         serializer = UserSerializer(request.user, context={"request": request})
         return Response(status=status.HTTP_200_OK, data=serializer.data)

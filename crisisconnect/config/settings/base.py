@@ -50,7 +50,7 @@ DATABASES = {"default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
         "NAME": "crisisconnect",
         "USER": "postgres",
-        "PASSWORD": "suraj@2002",
+        "PASSWORD": "password",
         "HOST": "localhost",
         "PORT": "5432",
     }
@@ -84,7 +84,6 @@ THIRD_PARTY_APPS = [
     "crispy_bootstrap5",
     "allauth",
     "allauth.account",
-    "allauth.mfa",
     "rest_framework",
     "rest_framework.authtoken",
     "corsheaders",
@@ -160,6 +159,21 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
+]
+
+
+CORS_ALLOW_ALL_ORIGINS=True
+CORS_ALLOW_CREDENTIALS=True
+
+
+
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'PUT',
+    'PATCH',
+    'DELETE',
+    'OPTIONS',
 ]
 
 # STATIC
@@ -309,8 +323,14 @@ REST_FRAMEWORK = {
 }
 
 # django-cors-headers - https://github.com/adamchainz/django-cors-headers#setup
-CORS_URLS_REGEX = r"^/api/.*$"
 
+CORS_URLS_REGEX = r"^/api/.*$"
+# ------------------------------------------------------------------------------
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:8000/",
+    
+]
 # By Default swagger ui is available only to admin user(s). You can change permission classes to change that
 # See more configuration options at https://drf-spectacular.readthedocs.io/en/latest/settings.html#settings
 SPECTACULAR_SETTINGS = {
@@ -320,4 +340,5 @@ SPECTACULAR_SETTINGS = {
     "SERVE_PERMISSIONS": ["rest_framework.permissions.IsAdminUser"],
 }
 # Your stuff...
-# ------------------------------------------------------------------------------
+
+

@@ -28,7 +28,6 @@ class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
     def get_success_url(self):
         # for mypy to know that the user is authenticated
-        assert self.request.user.is_authenticated
         return self.request.user.get_absolute_url()
 
     def get_object(self):
@@ -50,15 +49,15 @@ user_redirect_view = UserRedirectView.as_view()
 class GoogleLogin(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
     client_class = OAuth2Client
-    callback_url = "https://127.0.0.1:8000/"
+    callback_url = "http://127.0.0.1:8000/accounts/google/login/callback/"
    
 
     serializer_class = SocialLoginSerializer
 
-    def get_serializer(self, *args, **kwargs):
-        serializer_class = self.get_serializer_class()
-        kwargs["context"] = self.get_serializer_context()
-        return serializer_class(*args, **kwargs)
+    # def get_serializer(self, *args, **kwargs):
+    #     serializer_class = self.get_serializer_class()
+    #     kwargs["context"] = self.get_serializer_context()
+    #     return serializer_class(*args, **kwargs)
 
-
+   
 google_login = GoogleLogin.as_view()

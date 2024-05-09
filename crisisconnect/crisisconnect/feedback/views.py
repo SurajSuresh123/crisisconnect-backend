@@ -10,9 +10,6 @@ from .permission import IsCollector
 # Create your views here.
 class CreateFeedback(CreateAPIView):
     serializer_class = CreateFeedbackSerializer
-    permission_classes = [
-        IsAuthenticated,
-    ]
     def create(self, request: Request) -> Response:
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
