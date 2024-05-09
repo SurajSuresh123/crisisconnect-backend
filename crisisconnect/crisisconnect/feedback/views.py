@@ -58,3 +58,4 @@ class SpecificFeedbackDetails(RetrieveAPIView):
     lookup_field='pk'
 
 specific_feedback_details=SpecificFeedbackDetails.as_view()
+

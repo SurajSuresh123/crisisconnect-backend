@@ -61,3 +61,33 @@ class SpecificRequestDetails(RetrieveAPIView):
     lookup_field='pk'
 
 specific_request_details=SpecificRequestDetails.as_view()
+
+class ApprovedRetrieveRequest(ListAPIView):
+    serializer_class = RetrieveRequestSerializer
+
+    def get_queryset(self):
+        return UserRequest.objects.filter(approved=True)
+    def list(self,request):
+        user_request=self.get_queryset()
+        if user_request.exists():
+            serializer = self.get_serializer(user_request, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response({"Message":"No Approved Requests Present"},status.HTTP_204_NO_CONTENT)
+
+approved_retrieve_request = ApprovedRetrieveRequest.as_view()
+
+class RejectedRetrieveRequest(ListAPIView):
+    serializer_class = RetrieveRequestSerializer
+
+    def get_queryset(self):
+        return UserRequest.objects.filter(approved=False)
+    def list(self,request):
+        user_request=self.get_queryset()
+        if user_request.exists():
+            serializer = self.get_serializer(user_request, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response({"Message":"No Requests Present"},status.HTTP_204_NO_CONTENT)
+
+rejected_retrieve_request = RejectedRetrieveRequest.as_view()
