@@ -50,7 +50,7 @@ DATABASES = {"default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
         "NAME": "crisisconnect",
         "USER": "postgres",
-        "PASSWORD": "suraj@2002",
+        "PASSWORD": "password",
         "HOST": "localhost",
         "PORT": "5432",
     }

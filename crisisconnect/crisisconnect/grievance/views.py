@@ -11,9 +11,9 @@ from .permission import IsWardMember
 
 class CreateGrievance(CreateAPIView):
     serializer_class = CreateGrievanceSerializer
-    permission_classes = [
-        IsAuthenticated,
-    ]
+    # permission_classes = [
+    #     IsAuthenticated,
+    # ]
     def create(self, request: Request) -> Response:
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -24,7 +24,7 @@ create_grievance=CreateGrievance.as_view()
 
 class RetrieveGrievance(ListAPIView):
     serializer_class=RetrieveGrievanceSerializer
-    permission_classes =[IsAuthenticated,IsWardMember]
+    # permission_classes =[IsAuthenticated,IsWardMember]
     queryset=Grievance.objects.all()
 
     def list(self,request):
@@ -39,9 +39,9 @@ retrieve_grievance = RetrieveGrievance.as_view()
 
 class UserRetrieveGrievance(ListAPIView):
     serializer_class = RetrieveGrievanceSerializer
-    permission_classes = [
-        IsAuthenticated
-    ]
+    # permission_classes = [
+    #     IsAuthenticated
+    # ]
     def get_queryset(self):
         return Grievance.objects.filter(user=self.request.user)
     def user_list(self,request):
@@ -57,8 +57,16 @@ user_retrieve_grievance = UserRetrieveGrievance.as_view()
 
 class SpecificGrievanceDetails(RetrieveAPIView):
     serializer_class=RetrieveGrievanceSerializer
-    permission_classes=[IsAuthenticated,]
-    queryset=Grievance.objects.all()
-    lookup_field='pk'
+    # permission_classes=[IsAuthenticated,]
+    def get_queryset(self):
+        request_id = self.kwargs.get('request_id')
+        return Grievance.objects.filter(request_id=request_id)
 
+    def request_grievance_list(self,request):
+        grievance=self.get_queryset()
+        if grievance.exists():
+            serializer = self.get_serializer(grievance, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response({"Message":"No Grievances made"},status.HTTP_204_NO_CONTENT)
 specific_grievance_details=SpecificGrievanceDetails.as_view()
