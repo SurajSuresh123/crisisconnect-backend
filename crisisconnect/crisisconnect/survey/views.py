@@ -11,9 +11,9 @@ from .permission import IsWardMember
 
 class CreateSurvey(CreateAPIView):
     serializer_class = CreateSurveySerializer
-    permission_classes = [
-        IsAuthenticated,IsWardMember,
-    ]
+    # permission_classes = [
+    #     IsAuthenticated,IsWardMember,
+    # ]
     def create(self, request: Request) -> Response:
         serializer = self.serializer_class(data=request.data)
         created_by=str(request.user.username)
