@@ -26,7 +26,16 @@ class UserRequest(models.Model):
     medical_document = models.FileField(
         upload_to="user_requests/med_docs", null=True, blank=True
     )
-    approved = models.BooleanField(default=False)
+    class ApprovedType(models.TextChoices):
+        PENDING = "P", _("Pending")
+        APPROVED = "A", _("Approved")
+        REJECTED = "R", _("Rejected")
+
+    survey_status = models.CharField(
+        max_length=1,
+        choices=ApprovedType.choices,
+        default=ApprovedType.PENDING,
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

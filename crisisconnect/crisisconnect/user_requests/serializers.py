@@ -24,7 +24,7 @@ class RetrieveRequestSerializer(serializers.ModelSerializer):
         return obj.user.phone_number
     class Meta:
         model = UserRequest
-        fields = ["id","username","address","email","phone_no","type", "request_desc", "document", "medical_document","created_at"]
+        fields = ["id","username","address","email","phone_no","type", "request_desc", "document", "medical_document","created_at","survey_status"]
 
 
     

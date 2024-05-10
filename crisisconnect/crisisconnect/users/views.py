@@ -14,6 +14,7 @@ from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from users.api.serializers import UserSerializer
 from rest_framework.response import Response
 from rest_framework import status
+from django.views.decorators.csrf import csrf_protect
 class UserDetailView(LoginRequiredMixin, DetailView):
     model = User
     slug_field = "username"
@@ -64,14 +65,3 @@ class GoogleLogin(SocialLoginView):
    
 google_login = GoogleLogin.as_view()
 
-class UpdateUserAPIView(APIView):
-
-    def post(self, request):
-        user = request.user
-        serializer = UserSerializer(user, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({'message': 'User updated successfully'}, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-update_view=UpdateUserAPIView.as_view()
