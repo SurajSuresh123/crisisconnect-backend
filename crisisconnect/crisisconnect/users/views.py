@@ -28,6 +28,7 @@ class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
     def get_success_url(self):
         # for mypy to know that the user is authenticated
+        # assert self.request.user.is_authenticated
         return self.request.user.get_absolute_url()
 
     def get_object(self):
