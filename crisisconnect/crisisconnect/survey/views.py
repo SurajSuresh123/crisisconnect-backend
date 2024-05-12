@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from .models import Survey
 from rest_framework import status
 from .permission import IsWardMember
+from crisisconnect.user_requests.models import UserRequest
 # Create your views here.
 
 class CreateSurvey(CreateAPIView):
@@ -16,6 +17,12 @@ class CreateSurvey(CreateAPIView):
     # ]
     def create(self, request: Request) -> Response:
         serializer = self.serializer_class(data=request.data)
+        survey_status = request.data.get("survey_status")
+        if survey_status:
+                request_id = request.data.get("request_id")
+                user_request = UserRequest.objects.get(id=request_id)
+                user_request.survey_status = survey_status
+                user_request.save()
         created_by=str(request.user.username)
         serializer.is_valid(raise_exception=True)
         serializer.save(user=self.request.user,created_by=created_by)
@@ -25,7 +32,7 @@ create_survey=CreateSurvey.as_view()
 
 class RetrieveUserSurvey(ListAPIView):
     serializer_class=CreateSurveySerializer
-    permission_classes =[IsAuthenticated,IsWardMember,]
+    # permission_classes =[IsAuthenticated,IsWardMember,]
     
     def get_queryset(self):
         return Survey.objects.filter(user=self.request.user)

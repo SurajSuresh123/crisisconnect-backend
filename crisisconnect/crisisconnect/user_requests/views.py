@@ -66,7 +66,7 @@ class ApprovedRetrieveRequest(ListAPIView):
     serializer_class = RetrieveRequestSerializer
 
     def get_queryset(self):
-        return UserRequest.objects.filter(approved=True)
+        return UserRequest.objects.filter(survey_status="A")
     def list(self,request):
         user_request=self.get_queryset()
         if user_request.exists():
@@ -81,7 +81,7 @@ class RejectedRetrieveRequest(ListAPIView):
     serializer_class = RetrieveRequestSerializer
 
     def get_queryset(self):
-        return UserRequest.objects.filter(approved=False)
+        return UserRequest.objects.filter(survey_status="R")
     def list(self,request):
         user_request=self.get_queryset()
         if user_request.exists():

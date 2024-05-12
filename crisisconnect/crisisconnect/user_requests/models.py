@@ -20,13 +20,18 @@ class UserRequest(models.Model):
         default=RequestType.BASIC_ITEMS,
     )
     request_desc = models.CharField(max_length=1000)
-    document = models.FileField(
-        upload_to="user_requests/upload_docs", null=True, blank=True
+    aadhar_no=models.CharField(max_length=12,blank=True)
+    ration_no=models.CharField(max_length=10,blank=True)
+    class ApprovedType(models.TextChoices):
+        PENDING = "P", _("Pending")
+        APPROVED = "A", _("Approved")
+        REJECTED = "R", _("Rejected")
+
+    survey_status = models.CharField(
+        max_length=1,
+        choices=ApprovedType.choices,
+        default=ApprovedType.PENDING,
     )
-    medical_document = models.FileField(
-        upload_to="user_requests/med_docs", null=True, blank=True
-    )
-    approved = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
